@@ -1,8 +1,9 @@
-from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
 from django.shortcuts import get_object_or_404
 
-from .models import Comment, Post, Group, Follow, User
+from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
+
+from .models import Comment, Follow, Group, Post, User
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -12,7 +13,6 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
-        read_only_fields = ('post',)
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -30,6 +30,10 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ('title',)
+        # согласно заданию нам нужно сделать проект на основе
+        # проекта документации. В примерах запросов GET и CREATE в словаре
+        # передаётся только значение по ключу "title",
+        # другие ключи не используются.
 
 
 class FollowSerializer(serializers.ModelSerializer):

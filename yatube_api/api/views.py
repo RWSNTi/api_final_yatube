@@ -15,6 +15,9 @@ class CreateListViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    """Класс-вьюсет для отображения и создания поста.
+    Допускается сортировка по группам."""
+
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [
@@ -27,6 +30,9 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """Класс для получения списка комментариев к посту,
+    а так же для создания комментария."""
+
     serializer_class = CommentSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
@@ -41,12 +47,17 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class GroupViewSet(CreateListViewSet):
+    """Класс для получения всех постов, связанных с выбранной группой."""
+
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class FollowViewSet(CreateListViewSet):
+    """Класс, реализующий возможность получения списка подписчиков,
+    получения постов авторов, на которых подписан пользователь.
+    Так же позволяет подписываться на других пользователей."""
 
     serializer_class = FollowSerializer
     permission_classes = [permissions.IsAuthenticated]

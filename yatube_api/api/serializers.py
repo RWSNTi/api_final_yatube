@@ -1,3 +1,5 @@
+"""Модуль, содержащий сериализаторы для
+преобразования JSON-объектов и их создания"""
 from django.shortcuts import get_object_or_404
 
 from rest_framework import serializers
@@ -30,10 +32,6 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ('title',)
-        # согласно заданию нам нужно сделать проект на основе
-        # проекта документации. В примерах запросов GET и CREATE в словаре
-        # передаётся только значение по ключу "title",
-        # другие ключи не используются.
 
 
 class FollowSerializer(serializers.ModelSerializer):
@@ -45,6 +43,7 @@ class FollowSerializer(serializers.ModelSerializer):
         slug_field='username', queryset=User.objects.all())
 
     def validate_following(self, value):
+        """Функция для ограничения возможности подписываться на самого себя."""
         user = self.context['request'].user
         following = get_object_or_404(User, username=value)
         if user == following:

@@ -1,3 +1,5 @@
+"""Модуль для адресации запросов. Используется DefaultRouter для 
+автоматического создания эндпоинтов."""
 from django.urls import path, include
 from django.conf.urls import url
 
